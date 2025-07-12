@@ -1,0 +1,24 @@
+/server
+├── /config
+│   └── db.js
+├── /middlewares
+│   └── verifyToken.js
+├── /user
+│   ├── user.model.js
+│   ├── user.controller.js
+│   └── user.route.js
+├── /college
+│   ├── college.model.js
+│   ├── college.controller.js
+│   └── college.route.js
+├── /admission
+│   ├── admission.model.js
+│   ├── admission.controller.js
+│   └── admission.route.js
+├── /review
+│   ├── review.model.js
+│   ├── review.controller.js
+│   └── review.route.js
+├── .env
+├── index.js
+└── package.json
