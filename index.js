@@ -3,16 +3,14 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
-
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://edugate-client.vercel.app', 
-];
-// Middleware
+// ✅ Allow frontend requests from these domains
+const allowedOrigins = ['http://localhost:3000', 'https://edugate-client.vercel.app'];
+
+// ✅ Middleware
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -22,26 +20,28 @@ app.use(
         callback(new Error('Not allowed by CORS'));
       }
     },
-    credentials: true, // Allow cookies and headers
+    credentials: true, // Allow cookies, auth headers, etc.
   }),
 );
+
+// ✅ Parse JSON body from requests
 app.use(express.json());
 
-// DB connect
+// ✅ Connect to MongoDB
 connectDB();
 
-// Modular Routes
-const userRoutes = require('./user/user.route');
-app.use('/api/users', userRoutes);
+// ✅ API Routes
+app.use('/api/users', require('./user/user.route'));
+app.use('/api/colleges', require('./college/college.route'));
+app.use('/api/admissions', require('./admission/admission.route'));
+app.use('/api/reviews', require('./review/review.route'));
 
-// app.use('/api/colleges', require('./college/college.route'));
-// app.use('/api/admissions', require('./admission/admission.route'));
-// app.use('/api/reviews', require('./review/review.route'));
-
+// ✅ Health Check Route
 app.get('/', (req, res) => {
   res.send('🎉 College Booking Server is Running...');
 });
 
+// ✅ Start server
 app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
 });
