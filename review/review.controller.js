@@ -42,3 +42,17 @@ exports.getCollegeReviews = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch college reviews.', error: err.message });
   }
 };
+
+// Backend controller example: (তোমার nodemodule তে)
+exports.getUserReviewsWithCollege = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const reviews = await Review.find({ userId })
+      .populate('collegeId', 'name imageUrl admissionDate') // কলেজ ইনফো
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(reviews);
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to fetch user reviews.', error: err.message });
+  }
+};

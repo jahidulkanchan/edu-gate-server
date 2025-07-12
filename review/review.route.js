@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middlewares/verifyToken'); // এখানে ইম্পোর্ট করো
-const { addReview, getAllReviews, getUserReviews, getCollegeReviews } = require('./review.controller');
+const { addReview, getAllReviews, getUserReviews, getCollegeReviews, getUserReviewsWithCollege } = require('./review.controller');
 
 // POST - Add review (প্রাইভেট)
 router.post('/', verifyToken, addReview);
@@ -15,5 +15,8 @@ router.get('/user/:userId', verifyToken, getUserReviews);
 
 // GET - Reviews by college (সবার জন্য ওপেন)
 router.get('/college/:collegeId', getCollegeReviews);
+// GET - Reviews by college (My Review college base) 
+router.get('/user/:userId/with-college', getUserReviewsWithCollege);
+
 
 module.exports = router;
