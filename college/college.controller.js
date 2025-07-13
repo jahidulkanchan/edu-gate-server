@@ -9,6 +9,22 @@ exports.getAllColleges = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch colleges.', error: error.message });
   }
 };
+exports.searchColleges = async (req, res) => {
+  const name = req.query.name;
+
+  try {
+    const results = await College.find({
+      name: { $regex: name, $options: 'i' }, // case-insensitive search
+    });
+
+    res.status(200).json({ colleges: results });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Search failed',
+      error: error.message,
+    });
+  }
+};
 
 // কলেজ ডিটেইল পাওয়া (GET /api/colleges/:id)
 exports.getCollegeById = async (req, res) => {
