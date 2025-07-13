@@ -4,10 +4,12 @@ const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: false, select: false }, 
     university: { type: String },
     address: { type: String },
-    isAdmin: { type: Boolean, default: false }, // <-- Add this line
+    photo: { type: String }, 
+    isGoogleUser: { type: Boolean, default: false }, 
+    isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true },
 );
